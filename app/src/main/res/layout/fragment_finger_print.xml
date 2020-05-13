@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/iv_finger"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:src="@mipmap/finger_grey_translation" />
+
+    <ImageView
+        android:id="@+id/iv_scan_finger"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@mipmap/scan_finger"
+        android:scaleType="fitXY"
+        android:visibility="gone" />
+
+    <com.example.gqapp.widget.ObjectRippleView
+        android:id="@+id/rippleview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

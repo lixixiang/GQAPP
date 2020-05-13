@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="main_left_titles">
+        <item>ADAS</item>
+        <item>微信</item>
+
+    </string-array>
+    <string-array name="main_right_titles">
+        <item>空调</item>
+        <item>多媒体</item>
+    </string-array>
+    <string-array name="meters">
+        <item>纯驾模式</item>
+        <item>导航模式</item>
+        <item>性能模式</item>
+        <item>智驾模式</item>
+    </string-array>
+
+
+    <declare-styleable name="vertical_scroll">
+        <attr name="textColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="ArcView">
+        <attr name="arcHeight" format="dimension"/>
+        <attr name="bgColor" format="color" />
+    </declare-styleable>
+
+<!-- 自定义viewpager-->
+    <attr name="icvp_min_page_scale_offset" format="dimension"/>
+    <attr name="icvp_center_page_scale_offset" format="dimension"/>
+    <attr name="icvp_min_page_scale" format="float"/>
+    <attr name="icvp_max_page_scale" format="float"/>
+    <attr name="icvp_medium_scaled" format="boolean"/>
+    <attr name="icvp_scroll_duration" format="integer"/>
+    <attr name="icvp_page_duration" format="integer"/>
+    <attr name="icvp_interpolator" format="reference"/>
+
+    <declare-styleable name="HorizontalInfiniteCycleViewPager">
+        <attr name="icvp_min_page_scale_offset"/>
+        <attr name="icvp_center_page_scale_offset"/>
+        <attr name="icvp_min_page_scale"/>
+        <attr name="icvp_max_page_scale"/>
+        <attr name="icvp_medium_scaled"/>
+        <attr name="icvp_scroll_duration"/>
+        <attr name="icvp_page_duration"/>
+        <attr name="icvp_interpolator"/>
+    </declare-styleable>
+
+    <declare-styleable name="VerticalInfiniteCycleViewPager">
+        <attr name="icvp_min_page_scale_offset"/>
+        <attr name="icvp_center_page_scale_offset"/>
+        <attr name="icvp_min_page_scale"/>
+        <attr name="icvp_max_page_scale"/>
+        <attr name="icvp_medium_scaled"/>
+        <attr name="icvp_scroll_duration"/>
+        <attr name="icvp_page_duration"/>
+        <attr name="icvp_interpolator"/>
+    </declare-styleable>
+
+    <declare-styleable name="WaveView">
+        <attr name="waveColor" format="color"/>
+        <attr name="baselineColor" format="color"/>
+        <attr name="maxValue" format="integer"/>
+        <attr name="waveStokeWidth" format="dimension"/>
+        <attr name="invalidateTime" format="integer"/>
+        <attr name="space" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="voiceView">
+        <!--中间线的颜色，就是波形的时候，大家可以看到，中间有一条直线，就是那个-->
+        <attr name="middleLine" format="color" />
+        <!--中间线的高度，因为宽度是充满的-->
+        <attr name="middleLineHeight" format="dimension" />
+        <!--波动的线的颜色，如果是矩形样式的话，刚是矩形的颜色-->
+        <attr name="voiceLine" format="color" />
+        <!--波动线的横向移动速度，线的速度的反比，即这个值越小，线横向移动越快，越大线移动越慢，默认90-->
+        <attr name="lineSpeed" format="integer" />
+        <!--矩形的宽度-->
+        <attr name="rectWidth" format="dimension" />
+        <!--矩形之间的间隔-->
+        <attr name="rectSpace" format="dimension" />
+        <!--矩形的初始高度，就是没有声音的时候，矩形的高度-->
+        <attr name="rectInitHeight" format="dimension" />
+        <!--所输入音量的最大值-->
+        <attr name="maxVolume" format="float" />
+        <!--控件的样式，一共有两种，波形或者矩形-->
+        <attr name="viewMode">
+            <enum name="line" value="0" />
+            <enum name="rect" value="1" />
+        </attr>
+        <!--灵敏度，默认值是4-->
+        <attr name="sensibility">
+            <enum name="one" value="1" />
+            <enum name="two" value="2" />
+            <enum name="three" value="3" />
+            <enum name="four" value="4" />
+            <enum name="five" value="5" />
+        </attr>
+        <!--精细度，绘制曲线的时候，每几个像素绘制一次，默认是1，一般，这个值越小，曲线越顺滑，
+            但在一些旧手机上，会出现帧率过低的情况，可以把这个值调大一点，在图片的顺滑度与帧率之间做一个取舍-->
+        <attr name="fineness">
+            <enum name="one" value="1" />
+            <enum name="two" value="2" />
+            <enum name="three" value="3" />
+        </attr>
+    </declare-styleable>
+</resources>
