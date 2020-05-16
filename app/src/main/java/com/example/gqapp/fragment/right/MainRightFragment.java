@@ -20,6 +20,7 @@ import butterknife.OnClick;
 import butterknife.OnTouch;
 
 import static com.example.gqapp.app.Constance.RIGHT_MAIN_VOICE_VALUE;
+import static com.example.gqapp.app.Constance.VOICE_VALUE;
 
 /**
  * @ProjectName: GQAPP
@@ -155,6 +156,8 @@ public class MainRightFragment extends BaseFragment {
                 } else if (VoiceValue <= 0) {
                     VoiceValue = 0;
                 }
+                MyApplication.put(_mActivity,VOICE_VALUE,VoiceValue);
+                VoiceValue = (int) MyApplication.get(_mActivity, VOICE_VALUE, -1);
                 tvMidTitle.setText(VoiceValue + "%");
                 break;
         }
@@ -166,6 +169,7 @@ public class MainRightFragment extends BaseFragment {
         EventBean<String> eventBean = new EventBean<String>(Constance.GONE_RIGHT_COME_BACK_LINE, MainRightFragment.class.getName());
         EventBusUtil.sendEvent(eventBean);
     }
+
 }
 
 

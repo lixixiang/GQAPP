@@ -3,6 +3,7 @@ package com.example.gqapp;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -12,6 +13,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.example.gqapp.app.MyApplication;
 import com.example.gqapp.base.BaseActivity;
 import com.example.gqapp.bean.EventBean;
 import com.example.gqapp.fragment.finger.FingerPrintFragment;
@@ -46,13 +48,6 @@ public class MainActivity extends BaseActivity {
 
     private int LeftRightValue;
 
-    // NanoPC-T4 UART4
-    private String devName = "/dev/ttyS4";
-    private int speed = 38400;
-    private int dataBits = 8;
-    private int stopBits = 1;
-    private int devfd = -1;
-
     @Override
     protected void initView() {
         leftRotation90(flMainLeft);
@@ -73,6 +68,11 @@ public class MainActivity extends BaseActivity {
                 comeBack2(MainRightFragment.newInstance());
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -215,5 +215,11 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MyApplication.clear(_mActivity);
     }
 }

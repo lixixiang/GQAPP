@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.gqapp.R;
+import com.example.gqapp.app.MyApplication;
 import com.example.gqapp.base.BaseFragment;
 import com.example.gqapp.bean.EventBean;
 import com.example.gqapp.fragment.adapter.HorizontalPagerAdapter;
@@ -25,7 +26,12 @@ import com.example.gqapp.widget.horizontal.HorizontalInfiniteCycleViewPager;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.example.gqapp.app.Constance.BLUETOOTH_ON_OFF;
+import static com.example.gqapp.app.Constance.CHANGE_MEDIAL;
 import static com.example.gqapp.app.Constance.LEFT_RIGHT_VALUE;
+import static com.example.gqapp.app.Constance.NECK_PRO;
+import static com.example.gqapp.app.Constance.PLAY_ON_OFF;
+import static com.example.gqapp.app.Constance.SOUND;
 import static com.example.gqapp.app.Constance.TIPS_INFO_LEFT;
 
 /**
@@ -52,6 +58,7 @@ public class WMMFragment extends BaseFragment {
     private int currentVolume, currentVolume2;
     private String[] strVMMTitles = {"We Will Rock You Queen", "Something Change Queen", "We Will Rock You Queen"};
     private int isLeftRight;
+    private int currentPlay;
 
     public static WMMFragment newInstance(int isLeftRight) {
         WMMFragment fragment = new WMMFragment();
@@ -75,6 +82,23 @@ public class WMMFragment extends BaseFragment {
         },5000);
 
         ImageViewPager.setAdapter(new HorizontalPagerAdapter(_mActivity));
+
+        currentPlay = (int) MyApplication.get(_mActivity, CHANGE_MEDIAL, -1);
+        isChangeStatus = (boolean) MyApplication.get(_mActivity, BLUETOOTH_ON_OFF, false);
+        isPaying = (boolean) MyApplication.get(_mActivity, PLAY_ON_OFF, false);
+        if (isChangeStatus) {
+            ivBluetooth.setImageResource(R.drawable.iv_signal);
+        } else {
+            ivBluetooth.setImageResource(R.drawable.iv_bluetooth);
+        }
+        if (isPaying) {
+            ivPlaying.setImageResource(R.drawable.iv_pause);
+        } else {
+            ivPlaying.setImageResource(R.drawable.iv_playing);
+        }
+        if (currentPlay != -1) {
+            ImageViewPager.setCurrentItem(currentPlay);
+        }
         ImageViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -90,8 +114,9 @@ public class WMMFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                Log.d("onPageSelected", strVMMTitles[ImageViewPager.getRealItem()]);
+                Log.d("onPageSelected", strVMMTitles[ImageViewPager.getRealItem()]+"   "+ImageViewPager.getRealItem());
                 tvTitle.setText(strVMMTitles[ImageViewPager.getRealItem()]);
+                MyApplication.put(_mActivity,CHANGE_MEDIAL,ImageViewPager.getRealItem());
             }
 
             @Override
@@ -111,6 +136,7 @@ public class WMMFragment extends BaseFragment {
                     ivBluetooth.setImageResource(R.drawable.iv_bluetooth);
                 }
                 isChangeStatus = !isChangeStatus;
+                MyApplication.put(_mActivity,BLUETOOTH_ON_OFF,isChangeStatus);
                 break;
             case R.id.iv_playing:
                 if (!isPaying) {
@@ -119,6 +145,7 @@ public class WMMFragment extends BaseFragment {
                     ivPlaying.setImageResource(R.drawable.iv_playing);
                 }
                 isPaying = !isPaying;
+                MyApplication.put(_mActivity,PLAY_ON_OFF,isPaying);
                 break;
             case R.id.iv_volume:
                 final AlertDialog dlg = new AlertDialog.Builder(_mActivity, R.style.voiceDialog).create();
@@ -128,13 +155,18 @@ public class WMMFragment extends BaseFragment {
                 SeekBar sbHeadrest = dlg.findViewById(R.id.sb_headrest);
                 SeekBar sbSurround = dlg.findViewById(R.id.sb_surround);
                 AnimOrientation.rightRotation90(ll);
+                currentVolume = (int) MyApplication.get(_mActivity, NECK_PRO, -1);
+                currentVolume2 = (int) MyApplication.get(_mActivity, SOUND, -1);
                 sbHeadrest.setProgress(currentVolume);
                 sbSurround.setProgress(currentVolume2);
+
                 sbSurround.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        Log.d("progress", progress + "");
                         currentVolume2 = progress;
                         sbSurround.setProgress(currentVolume2);
+                        MyApplication.put(_mActivity,SOUND,currentVolume2);
                     }
 
                     @Override
@@ -152,6 +184,7 @@ public class WMMFragment extends BaseFragment {
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                         currentVolume = progress;
                         sbHeadrest.setProgress(currentVolume);
+                        MyApplication.put(_mActivity,NECK_PRO,currentVolume);
                     }
 
                     @Override

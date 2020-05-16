@@ -11,6 +11,7 @@ import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.unit.Subunits;
 
 
+
 /**
  * created by lxx at 2019/7/23 17:10
  * 描述:
@@ -26,8 +27,8 @@ public class MyApplication extends Application {
         super.onCreate();
         MyApplication.mContext = getApplicationContext();
         configUnits(); //适配屏幕
-
     }
+
 
 
     private void configUnits() {
@@ -139,5 +140,18 @@ public class MyApplication extends Application {
             }
             editor.commit();
         }
+    }
+
+    /**
+     * 清除所有数据
+     *
+     * @param context
+     */
+    public static void clear(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.clear();
+        SharedPreferencesCompat.apply(editor);
     }
 }

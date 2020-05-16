@@ -62,6 +62,8 @@ public class MyViewPagerFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     protected void initView() {
+
+
         switch (isLeftRight) {
             case 0:
                 new Handler().postDelayed(new Runnable() {

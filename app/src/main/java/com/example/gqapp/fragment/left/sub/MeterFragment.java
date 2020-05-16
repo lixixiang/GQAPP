@@ -1,6 +1,7 @@
 package com.example.gqapp.fragment.left.sub;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.gqapp.R;
+import com.example.gqapp.app.MyApplication;
 import com.example.gqapp.base.BaseFragment;
 import com.example.gqapp.bean.EventBean;
 import com.example.gqapp.fragment.adapter.SmartPagerAdapter;
@@ -19,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.example.gqapp.app.Constance.CAR_MODE;
 import static com.example.gqapp.app.Constance.LEFT_RIGHT_VALUE;
 
 /**
@@ -37,10 +40,11 @@ public class MeterFragment extends BaseFragment {
     private List<ImageView> mList = new ArrayList<>();
     private String[] titles;
     TextView textView;
-    private int currentPosition;
+    private int currentPosition,currentItem;
 
-    public static final MeterFragment newInstance() {
+    public static final MeterFragment newInstance(int currentItem) {
         MeterFragment fragment = new MeterFragment();
+        fragment.currentItem = currentItem;
         return fragment;
     }
 
@@ -52,7 +56,6 @@ public class MeterFragment extends BaseFragment {
     @Override
     protected void initView() {
         viewpager.setOffscreenPageLimit(3); //预加载三个
-        viewpager.setCurrentItem(1);
         titles = getResources().getStringArray(R.array.meters);
 
         for (int i = 0; i < images.length; i++) {
@@ -61,9 +64,8 @@ public class MeterFragment extends BaseFragment {
             mList.add(imageView);
         }
 
-
         viewpager.setAdapter(new SmartPagerAdapter(_mActivity, mList));
-        viewpager.setCurrentItem(1);
+        viewpager.setCurrentItem(currentItem);
         viewpager.setPageTransformer(true, new VerticalScaleInTransformer());
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -74,44 +76,48 @@ public class MeterFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 currentPosition = position;
+                MyApplication.put(_mActivity,CAR_MODE,currentPosition);
+                Log.d("currentPosition", currentPosition + "");
                 if (position == 0) {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            viewpager.setCurrentItem(mList.size()-2,false) ;//跳转到末位
+                            viewpager.setCurrentItem(mList.size() - 2, false);//跳转到末位
                         }
                     }, 500);
 
 //                tvTitle.setText(titles[position]);
-                    //    Log.d("test", titles[position]);
+//                        Log.d("test", titles[position]+"      "+position);
                 } else if (position == mList.size() - 1) {
                     new Handler().postDelayed(new Runnable() {//末位扩展的item
                         @Override
                         public void run() {
-                            viewpager.setCurrentItem(1,false);//跳转到首位
+                            viewpager.setCurrentItem(1, false);//跳转到首位
                         }
                     }, 500);
                 }
             }
-                @Override
-                public void onPageScrollStateChanged ( int state){
-                    if (state == ViewPager.SCROLL_STATE_IDLE) {
-                        tvTitle.setVisibility(View.VISIBLE);
-                        if (currentPosition == 0) {
-                            viewpager.setCurrentItem(mList.size() - 2, false);
-                        } else if (currentPosition == mList.size() - 1) {
-                            viewpager.setCurrentItem(1, false);
-                        }
-                    } else {
-                        tvTitle.setVisibility(View.GONE);
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    tvTitle.setVisibility(View.VISIBLE);
+                    if (currentPosition == 0) {
+                        viewpager.setCurrentItem(mList.size() - 2, false);
+                    } else if (currentPosition == mList.size() - 1) {
+                        viewpager.setCurrentItem(1, false);
                     }
+                } else {
+                    tvTitle.setVisibility(View.GONE);
                 }
-            });
-        }
-        @Override
-        public void onResume () {
-            super.onResume();
-            EventBean<Integer> eventBean = new EventBean<Integer>(LEFT_RIGHT_VALUE, 0);
-            EventBusUtil.sendEvent(eventBean);
-        }
+            }
+        });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBean<Integer> eventBean = new EventBean<Integer>(LEFT_RIGHT_VALUE, 0);
+        EventBusUtil.sendEvent(eventBean);
+    }
+}

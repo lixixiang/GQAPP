@@ -163,11 +163,14 @@ public class PickerView extends View {
      * @param mSelectItem
      */
     public void setSelected(String mSelectItem) {
-        for (int i = 0; i < mDataList.size(); i++)
+        for (int i = 0; i < mDataList.size(); i++){
             if (mDataList.get(i).equals(mSelectItem)) {
                 setSelected(i);
+
                 break;
             }
+        }
+        invalidate();
     }
 
     private void moveHeadToTail() {
