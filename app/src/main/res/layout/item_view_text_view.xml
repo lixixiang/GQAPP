@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="10dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/iv_left_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_centerVertical="true"
-        android:src="@drawable/car02"/>
+        android:layout_centerVertical="true" />
 
     <TextView
         android:id="@+id/tv_mid_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        tools:text="View"
         android:layout_centerInParent="true"
-        android:textColor="@color/white_1" />
+        android:textColor="@color/white_1"
+        android:textSize="18sp"
+        tools:text="View" />
 
     <ImageView
         android:id="@+id/iv_right_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/car02"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

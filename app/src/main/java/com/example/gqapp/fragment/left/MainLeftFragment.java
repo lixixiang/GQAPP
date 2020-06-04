@@ -1,24 +1,34 @@
 package com.example.gqapp.fragment.left;
 
+import android.graphics.Typeface;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.gqapp.R;
 import com.example.gqapp.app.Constance;
 import com.example.gqapp.app.MyApplication;
 import com.example.gqapp.base.BaseFragment;
+import com.example.gqapp.bean.DialogBean;
 import com.example.gqapp.bean.EventBean;
 import com.example.gqapp.fragment.left.sub.MeterFragment;
 import com.example.gqapp.fragment.left.sub.WeChatFragment;
 import com.example.gqapp.utils.EventBusUtil;
+import com.example.gqapp.utils.uart.UartTxData;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.example.gqapp.app.Constance.CAR_MODE;
 import static com.example.gqapp.app.Constance.LEFT_MAIN_MODE_VALUE;
+import static com.example.gqapp.app.Constance.START_PHONE;
+import static com.example.gqapp.app.Constance.START_PHONE_TEST;
+import static com.example.gqapp.app.Constance.TIPS_INFO;
+import static com.example.gqapp.app.Constance.TIPS_MAIN_LEFT_INFO;
 
 /**
  * @ProjectName: GQAPP
@@ -27,23 +37,18 @@ import static com.example.gqapp.app.Constance.LEFT_MAIN_MODE_VALUE;
  * @Description: java类作用描述 左边App 主界面入口
  */
 public class MainLeftFragment extends BaseFragment {
-
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.iv_icon)
-    ImageView ivIcon;
-    @BindView(R.id.tv_title2)
-    TextView tvTitle2;
-    @BindView(R.id.iv_icon2)
-    ImageView ivIcon2;
+    @BindView(R.id.iv_car_speed_distance)
+    ImageView ivCarSpeedDistance;
+    @BindView(R.id.iv_wechat)
+    ImageView ivWechat;
     @BindView(R.id.iv_left_icon)
-    ImageView ivLeftIcon;
+    Button ivLeftIcon;
     @BindView(R.id.tv_mid_title)
     TextView tvMidTitle;
     @BindView(R.id.iv_right_icon)
-    ImageView ivRightIcon;
-    private int[] iconDataL = {R.drawable.car01, R.drawable.car02};
-    private String[] string = MyApplication.getAppContext().getResources().getStringArray(R.array.main_left_titles);
+    Button ivRightIcon;
+    @BindView(R.id.re_right_bottom)
+    RelativeLayout reRightBottom;
     private int currentItem = 1; //view下当前显示的模式
 
     public static final MainLeftFragment newInstance() {
@@ -58,41 +63,55 @@ public class MainLeftFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tvTitle.setText(string[0]);
-        tvTitle2.setText(string[1]);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+//                DialogBean bean = new DialogBean(0x11, 0);
+//                EventBean<DialogBean> eventBean = new EventBean<DialogBean>(TIPS_INFO, bean);
+//                EventBusUtil.sendEvent(eventBean);
+
+//                EventBean<Integer> eventBean = new EventBean<Integer>(START_PHONE, 0x11);
+//                EventBusUtil.sendEvent(eventBean);
+            }
+        }, 8000);
+
+        Typeface typeface = Typeface.createFromAsset(_mActivity.getAssets(), "Roboto_Regular.ttf");
+        tvMidTitle.setTypeface(typeface);
         tvMidTitle.setText(R.string.str_view);
-        ivIcon.setImageResource(iconDataL[0]);
-        ivIcon2.setImageResource(iconDataL[1]);
         currentItem = (int) MyApplication.get(_mActivity, CAR_MODE, currentItem);
+        ivCarSpeedDistance.setImageResource(R.drawable.steering_wheel_left_screen_icon_adas);
+        ivWechat.setImageResource(R.drawable.steering_wheel_left_screen_icon_wechat);
+        UartTxData.PAD_ICM_ViewSt = currentItem;
     }
 
-    @OnClick({R.id.ll_adns, R.id.ll_wechat,R.id.tv_mid_title,R.id.iv_left_icon,R.id.iv_right_icon})
+    @OnClick({R.id.iv_car_speed_distance, R.id.iv_wechat, R.id.re_right_bottom, R.id.iv_left_icon, R.id.iv_right_icon})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_adns:
+            case R.id.iv_car_speed_distance:
                 startFragmentLeft(MyViewPagerFragment.newInstance(0));
                 break;
-            case R.id.ll_wechat:
+            case R.id.iv_wechat:
                 startFragmentLeft(WeChatFragment.newInstance());
                 break;
-            case R.id.tv_mid_title:
+            case R.id.re_right_bottom:
                 startFragmentLeft(MeterFragment.newInstance(currentItem));
                 break;
             case R.id.iv_left_icon:
-                currentItem ++;
+                currentItem++;
                 EventBean<Integer> eventBean = new EventBean<Integer>(LEFT_MAIN_MODE_VALUE, currentItem);
                 EventBusUtil.sendEvent(eventBean);
 
                 break;
             case R.id.iv_right_icon:
-                currentItem --;
+                currentItem--;
                 EventBean<Integer> eventBean2 = new EventBean<Integer>(LEFT_MAIN_MODE_VALUE, currentItem);
                 EventBusUtil.sendEvent(eventBean2);
-
                 break;
-            default:break;
+            default:
+                break;
         }
     }
+
 
     @Override
     protected boolean isRegisterEventBus() {
@@ -108,8 +127,19 @@ public class MainLeftFragment extends BaseFragment {
                 } else if (currentItem < 0) {
                     currentItem = 4;
                 }
-                MyApplication.put(_mActivity,CAR_MODE,currentItem);
+                UartTxData.PAD_ICM_ViewSt = currentItem;
+                MyApplication.put(_mActivity, CAR_MODE, currentItem);
                 Log.d("currentItem", currentItem + "");
+                break;
+            case TIPS_MAIN_LEFT_INFO: //提示信息弹出框 总共 4 个
+                DialogBean bean = (DialogBean) event.getData();
+                EventBean<DialogBean> beanEventBean = new EventBean<DialogBean>(TIPS_INFO, bean);
+                EventBusUtil.sendEvent(beanEventBean);
+                break;
+            case START_PHONE_TEST:
+                int type2 = (int) event.getData();
+                EventBean<Integer> eventBean2 = new EventBean<Integer>(START_PHONE, type2);
+                EventBusUtil.sendEvent(eventBean2);
                 break;
         }
     }

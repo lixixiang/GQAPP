@@ -11,15 +11,24 @@ import android.graphics.Matrix;
 import android.graphics.NinePatch;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.annotation.ColorRes;
+import androidx.annotation.DimenRes;
+import androidx.annotation.IntegerRes;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
+import com.example.gqapp.R;
+import com.example.gqapp.widget.button.MorphingButton;
 
 /**
  * created by lxx at 2019/8/9 22:49
@@ -142,7 +151,7 @@ public class Utils {
      * 0 is a == b
      */
     public static int compareFloat(float a, float b, int degree) {
-        if (Math.abs(a-b) < Math.pow(0.1, degree)) {
+        if (Math.abs(a - b) < Math.pow(0.1, degree)) {
             return 0;
         } else {
             if (a < b) {
@@ -202,18 +211,19 @@ public class Utils {
 
     /**
      * 保存当前版本号
+     *
      * @param context
      * @param prefName
      * @param value
      */
     public static void putAppPrefInt(Context context, String prefName, int value) {
-        if(context!=null){
+        if (context != null) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor edit = sharedPreferences.edit();
             edit.putInt(prefName, value);
-            if(Build.VERSION.SDK_INT>=9){
+            if (Build.VERSION.SDK_INT >= 9) {
                 edit.apply();
-            }else{
+            } else {
                 edit.commit();
             }
         }
@@ -250,8 +260,8 @@ public class Utils {
     /**
      * bite 转 byte
      */
-    public static byte bitToByte(String bit){
-        int re = 0,len;
+    public static byte bitToByte(String bit) {
+        int re = 0, len;
         if (null == bit) {
             return 0;
         }
@@ -261,9 +271,9 @@ public class Utils {
         }
         if (len == 8) {
             if (bit.charAt(0) == '0') {
-                re = Integer.parseInt(bit,2) - 256;
+                re = Integer.parseInt(bit, 2) - 256;
             }
-        }else {
+        } else {
             re = Integer.parseInt(bit, 2);
         }
         return (byte) re;
@@ -272,7 +282,7 @@ public class Utils {
     /**
      * byte转bit 有多重方法
      */
-    public static String getBit(byte by){
+    public static String getBit(byte by) {
         StringBuffer sb = new StringBuffer();
         sb.append((by >> 7) & 0x1)
                 .append((by >> 6) & 0x1)
@@ -286,19 +296,20 @@ public class Utils {
     }
 
     /**
-     *  int转byte[]
+     * int转byte[]
+     *
      * @param i 该方法将一个int类型的数据转换为byte[]形式，因为int为32bit，
      *          而byte为8bit所以在进行类型转换时，知会获取低8位，
      * @return 丢弃高24位。通过位移的方式，将32bit的数据转换成4个8bit的数据。
      * 注意 &0xff，在这当中，&0xff简单理解为一把剪刀，
      * 将想要获取的8位数据截取出来。
      */
-    public static byte[] int2ByteArray(int i){
+    public static byte[] int2ByteArray(int i) {
         byte[] result = new byte[3];
         result[0] = (byte) ((i >> 24) & 0xFF);
         result[1] = (byte) ((i >> 16) & 0xFF);
         result[2] = (byte) ((i >> 8) & 0xFF);
-        result[3]=(byte)(i & 0xFF);
+        result[3] = (byte) (i & 0xFF);
         return result;
     }
 
@@ -311,23 +322,23 @@ public class Utils {
      */
     public static int bytes2Int(byte[] bytes) {
         int num = bytes[3] & 0xFF;
-        num |=((bytes[2]<<8)& 0xFF00);
-        num |=((bytes[1]<<16)& 0xFF0000);
-        num |=((bytes[0]<<24)& 0xFF0000);
+        num |= ((bytes[2] << 8) & 0xFF00);
+        num |= ((bytes[1] << 16) & 0xFF0000);
+        num |= ((bytes[0] << 24) & 0xFF0000);
         return num;
     }
 
     /**
      * 16进制转10进制
      */
-    public static int hex2decimal(String hex){
+    public static int hex2decimal(String hex) {
         return Integer.parseInt(hex, 16);
     }
 
     /**
      * 10进制转16进制
      */
-    public static String demical2Hex(int i){
+    public static String demical2Hex(int i) {
         String s = Integer.toHexString(i);
         return s;
     }
@@ -335,23 +346,23 @@ public class Utils {
     /**
      * 2进制与16进制的互相转换
      */
-    public static String hexStringToByte(String hex){
+    public static String hexStringToByte(String hex) {
         int i = Integer.parseInt(hex, 16);
-        String str2  = Integer.toBinaryString(i);
+        String str2 = Integer.toBinaryString(i);
         return str2;
     }
 
     /**
      * 2进制转10进制
      */
-    public static int ByteToDecimal(String bytes){
+    public static int ByteToDecimal(String bytes) {
         return Integer.valueOf(bytes, 2);
     }
 
     /**
      * 10进制转2进制
      */
-    public static String Demical2Byte(int n){
+    public static String Demical2Byte(int n) {
         String result = Integer.toBinaryString(n);
         return result;
     }
@@ -381,11 +392,73 @@ public class Utils {
 
     /**
      * float 四舍五入保留一位小数
+     *
      * @param f
      * @return
      */
-    public static String strOnePointOfFloat(float f){
+    public static String strOnePointOfFloat(float f) {
         return String.format("%.1f", Double.valueOf(String.valueOf(f)));
     }
 
+    /**
+     * 设置字体
+     *
+     * @param context
+     * @param tv
+     * @param textType 字体类型
+     */
+    public static void TextType(Context context, TextView tv, String textType) {
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), textType);
+        tv.setTypeface(typeface);
+    }
+
+    public static void morphSquare(Context context, final MorphingButton btnMorph, int radius, int width, int height, int duration, int color, int press_color, int icon) {
+        MorphingButton.Params circle = MorphingButton.Params.create()
+                .duration(duration)
+                .cornerRadius(dimen(context, radius))
+                .width(dimen(context, width))
+                .height(dimen(context, height))
+                .color(color(context, color))
+                .colorPressed(color(context, press_color))
+                .icon(icon);
+        btnMorph.morph(circle);
+    }
+
+    public static void morphToBehindSquare(Context context, final MorphingButton btnMorph, int duration, int color, int colorPressed) {
+        MorphingButton.Params circle = MorphingButton.Params.create()
+                .duration(duration)
+                .cornerRadius(dimen(context, R.dimen.mb_corner_radius_50))
+                .width(dimen(context, R.dimen.mb_corner_radius_100))
+                .height(dimen(context, R.dimen.mb_height_56))
+                .color(color(context, color))
+                .colorPressed(color(context, colorPressed))
+                .icon(R.drawable.close_phone);
+        btnMorph.morph(circle);
+    }
+
+    public static int dimen(Context context, @DimenRes int resId) {
+        return (int) context.getResources().getDimension(resId);
+    }
+
+    public static int color(Context context, @ColorRes int resId) {
+        return context.getResources().getColor(resId);
+    }
+
+    public static int integer(Context context, @IntegerRes int resId) {
+        return context.getResources().getInteger(resId);
+    }
+
+    /**
+     * 截取部分屏幕
+     *
+     * @return
+     */
+    public static Bitmap captureLayout(Fragment fragment) {
+        //1。构建Bitmap
+        DisplayMetrics dm = fragment.getResources().getDisplayMetrics();
+        int w = dm.widthPixels;
+        int h = dm.heightPixels;
+        Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        return bmp;
+    }
 }

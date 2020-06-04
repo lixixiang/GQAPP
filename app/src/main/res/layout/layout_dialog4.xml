@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tips_phone_open_close"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="50dp"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fl_header_icon"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:paddingEnd="40dp"
+        android:layout_centerHorizontal="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_circle_img"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/wc1" />
+
+        <ImageView
+            android:id="@+id/iv_come_phone_anim"
+            android:layout_width="135dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/come_phone_anim"/>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="正在挂断"
+        android:visibility="gone"
+        android:paddingEnd="40dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fl_header_icon"
+        android:layout_marginTop="20dp"
+        android:paddingEnd="40dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.example.gqapp.widget.button.MorphingButton
+            android:id="@+id/fl_wechat_close_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp" />
+
+        <com.example.gqapp.widget.button.MorphingButton
+            android:id="@+id/fl_wechat_open_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

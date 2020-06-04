@@ -3,6 +3,7 @@ package com.example.gqapp.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -35,7 +37,6 @@ public abstract class BaseFragment extends Fragment {
     private boolean isFragmentVisible;
     public boolean isFirst;
     protected String fragmentTitle;             //fragment标题
-    private InputMethodManager imm;
     public FragmentActivity _mActivity;
     public Context context;
 
@@ -57,6 +58,12 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (isRegisterEventBus()) {
@@ -75,6 +82,12 @@ public abstract class BaseFragment extends Fragment {
         } else {
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        hideBottomUIMenu();
     }
 
     @Nullable
@@ -117,11 +130,12 @@ public abstract class BaseFragment extends Fragment {
 
 
     public void startFragmentLeft(Fragment fragment) {
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.left, fragment).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.dialog_enter,R.anim.dialog_exit).replace(R.id.left, fragment).commit();
+
     }
 
     public void startFragmentRight(Fragment fragment) {
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.right, fragment).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.dialog_enter,R.anim.dialog_exit).replace(R.id.right, fragment).commit();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -211,39 +225,8 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        this.imm = null;
     }
 
-    public void showSoftInput(Context context, View view) {
-        this.imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        this.imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-        //imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
-    }
-
-    public void hideSoftInput(Context context, View view) {
-        this.imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        this.imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
-    }
-
-    public boolean isShowSoftInput(Context context) {
-        this.imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        //获取状态信息
-        return imm.isActive();//true 打开
-    }
-
-    public void finish() {
-        hideSoftKeyBoard();
-    }
-
-    public void hideSoftKeyBoard() {
-        View localView = _mActivity.getCurrentFocus();
-        if (this.imm == null) {
-            this.imm = ((InputMethodManager) _mActivity.getSystemService(Context.INPUT_METHOD_SERVICE));
-        }
-        if ((localView != null) && (this.imm != null)) {
-            this.imm.hideSoftInputFromWindow(localView.getWindowToken(), 2);
-        }
-    }
 
     public String getTitle() {
         return TextUtils.isEmpty(fragmentTitle) ? "" : fragmentTitle;
@@ -252,8 +235,22 @@ public abstract class BaseFragment extends Fragment {
     public void setTitle(String title) {
         fragmentTitle = title;
     }
-
-
+/**
+ * 隐藏虚拟按键，并且全屏
+ */
+    protected void hideBottomUIMenu() {
+        //隐藏虚拟按键，并且全屏
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            View v = _mActivity.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            View decorView = _mActivity.getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+    }
 }
 
 

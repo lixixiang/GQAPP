@@ -45,7 +45,7 @@ public class SoundWaveView extends View {
 
     public void init () {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(getResources().getColor(R.color.black_alpha));
         mPaint.setStrokeWidth(LINE_WIDTH);
     }
 

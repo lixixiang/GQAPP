@@ -15,18 +15,10 @@
             android:clipChildren="false"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="90dp"
-            android:layout_marginTop="90dp"/>
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
             android:layout_marginBottom="80dp"
-            android:textColor="@color/white_1" />
+            android:layout_marginTop="80dp"/>
+
+
     </FrameLayout>
 
 </LinearLayout>

@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_height="match_parent">
 
-        <com.example.gqapp.widget.horizontal.HorizontalInfiniteCycleViewPager
-            android:id="@+id/circleViewPager"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_centerVertical="true"
-            app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
-            app:icvp_scroll_duration="250"
-            app:icvp_center_page_scale_offset="30dp"
-            app:icvp_min_page_scale_offset="5dp"
-            app:icvp_max_page_scale="0.8"
-            app:icvp_min_page_scale="0.55"
-            app:icvp_medium_scaled="false"/>
+        <FrameLayout
+            android:id="@+id/fl_viewpager"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:clipChildren="false">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/circleViewPager"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:clipChildren="false" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/fl_viewpager"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_toEndOf="@+id/circleViewPager"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -37,51 +38,26 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="We Will Rock You Queen"
                 android:textColor="@android:color/white"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_description"
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#Top 100Today"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Alan Walker"
                 android:textColor="@color/gray"
                 android:textSize="18sp" />
 
         </LinearLayout>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <ImageView
-            android:id="@+id/iv_bluetooth"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:src="@drawable/iv_bluetooth" />
-
-        <ImageView
-            android:id="@+id/iv_playing"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerInParent="true"
-            android:src="@drawable/iv_playing" />
-
-        <ImageView
-            android:id="@+id/iv_volume"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:src="@drawable/iv_volume" />
     </RelativeLayout>
 
 

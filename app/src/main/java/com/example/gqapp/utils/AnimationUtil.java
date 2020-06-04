@@ -5,6 +5,10 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ProjectName: GQAPP
@@ -100,7 +104,7 @@ public class AnimationUtil {
      * @param toAlpha
      */
     public static void startAlphaAnima(View view,
-                                       float fromAlpha, float toAlpha) {
+                                       float fromAlpha, float toAlpha, int duration) {
         if (view == null) {
             return;
         }
@@ -112,10 +116,189 @@ public class AnimationUtil {
         //-------Alpaha--------
         AnimatorSet set = new AnimatorSet();
         set.play(ObjectAnimator.ofFloat(view, "alpha", fromAlpha, toAlpha));
-        set.setDuration(ANIMA_TIME);
+        set.setDuration(duration);
         set.setInterpolator(new DecelerateInterpolator());
         set.start();
+    }
 
+    /**
+     * alpha 变化
+     * 由暗变亮，再由亮变暗 做循环播用
+     */
+    public static void startAlphaSet(List<ImageView> images, float fromAlpha, float toAlpha, int duration) {
+        if (images == null) {
+            return;
+        }
+        List<ObjectAnimator> objAnim = new ArrayList<>();
+        List<ObjectAnimator> objAnim2 = new ArrayList<>();
+        List<ObjectAnimator> newAlphaAnim2 = new ArrayList<>();
+        //-------Alpha--------
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(images.get(0), "alpha", fromAlpha, toAlpha - 0.10f);
+        ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(images.get(1), "alpha", fromAlpha, toAlpha - 0.20f);
+        ObjectAnimator objectAnimator2 = ObjectAnimator.ofFloat(images.get(2), "alpha", fromAlpha, toAlpha - 0.30f);
+        ObjectAnimator objectAnimator3 = ObjectAnimator.ofFloat(images.get(3), "alpha", fromAlpha, toAlpha - 0.40f);
+        ObjectAnimator objectAnimator4 = ObjectAnimator.ofFloat(images.get(4), "alpha", fromAlpha, toAlpha - 0.50f);
+
+        objectAnimator.setDuration(duration / 5);
+        objectAnimator1.setDuration(duration / 4);
+        objectAnimator2.setDuration(duration / 3);
+        objectAnimator3.setDuration(duration / 2);
+        objectAnimator4.setDuration(duration / 1);
+        objectAnimator.setInterpolator(new DecelerateInterpolator());
+        objectAnimator1.setInterpolator(new DecelerateInterpolator());
+        objectAnimator2.setInterpolator(new DecelerateInterpolator());
+        objectAnimator3.setInterpolator(new DecelerateInterpolator());
+        objectAnimator4.setInterpolator(new DecelerateInterpolator());
+
+        ObjectAnimator scaleAnimator = ObjectAnimator.ofFloat(images.get(0), "scale", 1.0f, 1.5f);
+        ObjectAnimator scaleAnimator1 = ObjectAnimator.ofFloat(images.get(1), "scale", 1.0f, 3f);
+        ObjectAnimator scaleAnimator2 = ObjectAnimator.ofFloat(images.get(2), "scale", 1.0f, 4.5f);
+        ObjectAnimator scaleAnimator3 = ObjectAnimator.ofFloat(images.get(3), "scale", 1.0f, 6.0f);
+        ObjectAnimator scaleAnimator4 = ObjectAnimator.ofFloat(images.get(4), "scale", 1.0f, 7.5f);
+
+        scaleAnimator.setDuration(duration / 5 + 500 * 1);
+        scaleAnimator1.setDuration(duration / 4 + 500 * 2);
+        scaleAnimator2.setDuration(duration / 3 + 500 * 3);
+        scaleAnimator3.setDuration(duration / 2 + 500 * 4);
+        scaleAnimator4.setDuration(duration / 1 + 500 * 5);
+
+        scaleAnimator.setInterpolator(new DecelerateInterpolator());
+        scaleAnimator1.setInterpolator(new DecelerateInterpolator());
+        scaleAnimator2.setInterpolator(new DecelerateInterpolator());
+        scaleAnimator3.setInterpolator(new DecelerateInterpolator());
+        scaleAnimator4.setInterpolator(new DecelerateInterpolator());
+
+        ObjectAnimator newAlpha = ObjectAnimator.ofFloat(images.get(0), "alpha", toAlpha - 0.10f, fromAlpha);
+        ObjectAnimator newAlpha1 = ObjectAnimator.ofFloat(images.get(1), "alpha", toAlpha - 0.20f, fromAlpha);
+        ObjectAnimator newAlpha2 = ObjectAnimator.ofFloat(images.get(2), "alpha", toAlpha - 0.30f, fromAlpha);
+        ObjectAnimator newAlpha3 = ObjectAnimator.ofFloat(images.get(3), "alpha", toAlpha - 0.40f, fromAlpha);
+        ObjectAnimator newAlpha4 = ObjectAnimator.ofFloat(images.get(4), "alpha", toAlpha - 0.50f, fromAlpha);
+
+        newAlpha.setDuration(duration / 5 + 500 * 1);
+        newAlpha1.setDuration(duration / 4 + 500 * 2);
+        newAlpha2.setDuration(duration / 3 + 500 * 3);
+        newAlpha3.setDuration(duration / 2 + 500 * 4);
+        newAlpha4.setDuration(duration / 1 + 500 * 5);
+
+        newAlpha.setInterpolator(new DecelerateInterpolator());
+        newAlpha1.setInterpolator(new DecelerateInterpolator());
+        newAlpha2.setInterpolator(new DecelerateInterpolator());
+        newAlpha3.setInterpolator(new DecelerateInterpolator());
+        newAlpha4.setInterpolator(new DecelerateInterpolator());
+
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(objectAnimator, objectAnimator1, objectAnimator2, objectAnimator3, objectAnimator4
+                 , scaleAnimator, newAlpha, scaleAnimator1, newAlpha1, scaleAnimator2, newAlpha2, scaleAnimator3, newAlpha3, scaleAnimator4, newAlpha4
+        );
+        set.start();
+        set.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(images.get(0), "alpha", fromAlpha, toAlpha - 0.10f);
+                ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(images.get(1), "alpha", fromAlpha, toAlpha - 0.20f);
+                ObjectAnimator objectAnimator2 = ObjectAnimator.ofFloat(images.get(2), "alpha", fromAlpha, toAlpha - 0.30f);
+                ObjectAnimator objectAnimator3 = ObjectAnimator.ofFloat(images.get(3), "alpha", fromAlpha, toAlpha - 0.40f);
+                ObjectAnimator objectAnimator4 = ObjectAnimator.ofFloat(images.get(4), "alpha", fromAlpha, toAlpha - 0.50f);
+
+                objectAnimator.setDuration(duration / 5);
+                objectAnimator1.setDuration(duration / 4);
+                objectAnimator2.setDuration(duration / 3);
+                objectAnimator3.setDuration(duration / 2);
+                objectAnimator4.setDuration(duration / 1);
+
+                objectAnimator.setInterpolator(new DecelerateInterpolator());
+                objectAnimator1.setInterpolator(new DecelerateInterpolator());
+                objectAnimator2.setInterpolator(new DecelerateInterpolator());
+                objectAnimator3.setInterpolator(new DecelerateInterpolator());
+                objectAnimator4.setInterpolator(new DecelerateInterpolator());
+
+                ObjectAnimator scaleAnimator = ObjectAnimator.ofFloat(images.get(0), "scale", 1.0f, 1.5f);
+                ObjectAnimator scaleAnimator1 = ObjectAnimator.ofFloat(images.get(1), "scale", 1.0f, 3f);
+                ObjectAnimator scaleAnimator2 = ObjectAnimator.ofFloat(images.get(2), "scale", 1.0f, 4.5f);
+                ObjectAnimator scaleAnimator3 = ObjectAnimator.ofFloat(images.get(3), "scale", 1.0f, 6.0f);
+                ObjectAnimator scaleAnimator4 = ObjectAnimator.ofFloat(images.get(4), "scale", 1.0f, 7.5f);
+
+                scaleAnimator.setDuration(duration / 5 + 500 * 1);
+                scaleAnimator1.setDuration(duration / 4 + 500 * 2);
+                scaleAnimator2.setDuration(duration / 3 + 500 * 3);
+                scaleAnimator3.setDuration(duration / 2 + 500 * 4);
+                scaleAnimator4.setDuration(duration / 1 + 500 * 5);
+
+                scaleAnimator.setInterpolator(new DecelerateInterpolator());
+                scaleAnimator1.setInterpolator(new DecelerateInterpolator());
+                scaleAnimator2.setInterpolator(new DecelerateInterpolator());
+                scaleAnimator3.setInterpolator(new DecelerateInterpolator());
+                scaleAnimator4.setInterpolator(new DecelerateInterpolator());
+
+                ObjectAnimator newAlpha = ObjectAnimator.ofFloat(images.get(0), "alpha", toAlpha - 0.10f, fromAlpha);
+                ObjectAnimator newAlpha1 = ObjectAnimator.ofFloat(images.get(1), "alpha", toAlpha - 0.20f, fromAlpha);
+                ObjectAnimator newAlpha2 = ObjectAnimator.ofFloat(images.get(2), "alpha", toAlpha - 0.30f, fromAlpha);
+                ObjectAnimator newAlpha3 = ObjectAnimator.ofFloat(images.get(3), "alpha", toAlpha - 0.40f, fromAlpha);
+                ObjectAnimator newAlpha4 = ObjectAnimator.ofFloat(images.get(4), "alpha", toAlpha - 0.50f, fromAlpha);
+
+                newAlpha.setDuration(duration / 5 + 500 * 1);
+                newAlpha1.setDuration(duration / 4 + 500 * 2);
+                newAlpha2.setDuration(duration / 3 + 500 * 3);
+                newAlpha3.setDuration(duration / 2 + 500 * 4);
+                newAlpha4.setDuration(duration / 1 + 500 * 5);
+
+                newAlpha.setInterpolator(new DecelerateInterpolator());
+                newAlpha1.setInterpolator(new DecelerateInterpolator());
+                newAlpha2.setInterpolator(new DecelerateInterpolator());
+                newAlpha3.setInterpolator(new DecelerateInterpolator());
+                newAlpha4.setInterpolator(new DecelerateInterpolator());
+
+                set.playTogether(objectAnimator, objectAnimator1, objectAnimator2, objectAnimator3, objectAnimator4
+                           , scaleAnimator, newAlpha, scaleAnimator1, newAlpha1, scaleAnimator2, newAlpha2, scaleAnimator3, newAlpha3, scaleAnimator4, newAlpha4
+                );
+                set.start();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
+//        for (int i = 0; i < images.size(); i++) {
+//            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(images.get(i), "alpha", fromAlpha, toAlpha - ((1 + i) * 0.10f));
+//            objectAnimator.setDuration(duration -(1000* i));
+//            objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
+//            objectAnimator.setInterpolator(new DecelerateInterpolator());
+//            objAnim.add(objectAnimator);
+//        }
+
+//        for (int i = 0; i < images.size(); i++) {
+//            ObjectAnimator scaleAnimator = ObjectAnimator.ofFloat(images.get(i), "scale", 1.0f, 1.5f * (i + 1));
+//            ObjectAnimator newAlpha = ObjectAnimator.ofFloat(images.get(i), "alpha", toAlpha - ((1 + i) * 0.10f), fromAlpha);
+//            scaleAnimator.setDuration(4000 + duration * i );
+//            newAlpha.setDuration(4000 + duration * i);
+//            scaleAnimator.setInterpolator(new DecelerateInterpolator());
+//            newAlpha.setInterpolator(new DecelerateInterpolator());
+//            objAnim2.add(scaleAnimator);
+//            newAlphaAnim2.add(newAlpha);
+//        }
+
+        //从亮变暗
+//        AnimatorSet set = new AnimatorSet();
+//        set.playTogether(objAnim.get(0), objAnim.get(1), objAnim.get(2), objAnim.get(3), objAnim.get(4)
+//                , objAnim2.get(0),newAlphaAnim2.get(0),
+//                objAnim2.get(1),newAlphaAnim2.get(1),
+//                objAnim2.get(2),newAlphaAnim2.get(2),
+//                objAnim2.get(3),newAlphaAnim2.get(3),
+//                objAnim2.get(4),newAlphaAnim2.get(4)
+//                );
+//                set.start();
     }
 
     /**

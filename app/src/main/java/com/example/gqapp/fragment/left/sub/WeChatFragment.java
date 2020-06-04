@@ -4,11 +4,13 @@ import android.speech.tts.Voice;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.gqapp.R;
 import com.example.gqapp.base.BaseFragment;
+import com.example.gqapp.bean.DialogBean;
 import com.example.gqapp.bean.EventBean;
 import com.example.gqapp.utils.EventBusUtil;
 import com.example.gqapp.widget.voice.SoundWaveView;
@@ -18,6 +20,10 @@ import butterknife.BindView;
 import butterknife.OnTouch;
 
 import static com.example.gqapp.app.Constance.LEFT_RIGHT_VALUE;
+import static com.example.gqapp.app.Constance.START_PHONE;
+import static com.example.gqapp.app.Constance.START_PHONE_TEST;
+import static com.example.gqapp.app.Constance.TIPS_INFO;
+import static com.example.gqapp.app.Constance.TIPS_MAIN_LEFT_INFO;
 import static com.example.gqapp.app.Constance.WECHAT_WAVE;
 
 /**
@@ -33,33 +39,12 @@ public class WeChatFragment extends BaseFragment {
     @BindView(R.id.iv_cancel)
     ImageView ivCancel;
     @BindView(R.id.iv_btn_voice)
-    ImageButton ivBtnVoice;
+    Button ivBtnVoice;
     @BindView(R.id.wave_view)
     SoundWaveView waveView;
     private boolean onClick;
     private int VoiceValue = 0;
-    short[] data = {
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            156, -13, 12, -68, 33, -104, 150, 30, 186, -29, 6, -25, -127, -167, -26, -25, -164, 293, 86, -181, -48, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 230, -193, 150, 30, 186, -29, 6, -25, -127, -167, -101, -11, -164, 293, 86, -181, -82, 327, -81, 101, -3, -116, -165, -81, 101, -3,
-            91, -13, 12, -68, 47, -193, 140, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 116, -81, 56, -3, -17, -165, 30, 186, -29,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, 138, -193, 150, 30, 186, -29, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, 3, 86, -181, -82, 327, -81, 56, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-            91, -13, 12, -68, 138, -193, 150, 30, 186, -29, 6, -25, -127, -167, -26, -11, -164, 293, 86, -181, -82, 327, -81, 56, -3, -116, -165, 293, 86, -181,
-    };
+
 
     public static final WeChatFragment newInstance() {
         WeChatFragment fragment = new WeChatFragment();
@@ -73,16 +58,7 @@ public class WeChatFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
         ivVoiceBg.setColorFilter(getResources().getColor(R.color.wechat_green_main));
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                EventBean<Integer> eventBean = new EventBean<Integer>(TIPS_INFO_LEFT, 3);
-//                EventBusUtil.sendEvent(eventBean);
-//            }
-//        }, 5000);
-
     }
 
     @OnTouch({R.id.iv_btn_voice})
@@ -133,22 +109,22 @@ public class WeChatFragment extends BaseFragment {
         switch (event.getCode()) {
             case WECHAT_WAVE:
                 VoiceValue = (int) event.getData();
-                Log.d("ddddddddd", VoiceValue + "");
-                if (VoiceValue > data.length) {
-                    VoiceValue = data.length;
-                }
                 waveView.setSoundVolume(10);
                 waveView.start();
+                break;
+            case TIPS_MAIN_LEFT_INFO: //提示信息弹出框 总共 4 个
+                DialogBean bean = (DialogBean) event.getData();
+                EventBean<DialogBean> beanEventBean = new EventBean<DialogBean>(TIPS_INFO, bean);
+                EventBusUtil.sendEvent(beanEventBean);
+                break;
+            case START_PHONE_TEST:
+                int type2 = (int) event.getData();
+                Log.d("START_PHONE", "START_PHONE+MAIN_LEFT===="+type2 + "");
+                EventBean<Integer> eventBean2 = new EventBean<Integer>(START_PHONE, type2);
+                EventBusUtil.sendEvent(eventBean2);
                 break;
         }
     }
 }
-
-
-
-
-
-
-
 
 

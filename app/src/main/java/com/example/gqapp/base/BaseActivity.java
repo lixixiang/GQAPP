@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.DimenRes;
+import androidx.annotation.IntegerRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -75,7 +78,6 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
 
-
     /**
      * 设置数据
      */
@@ -114,11 +116,11 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     protected void comeBack(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.left, fragment).commit();
+        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.dialog_enter,R.anim.dialog_exit).replace(R.id.left, fragment).commit();
     }
 
     protected void comeBack2(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.right, fragment).commit();
+        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.dialog_enter,R.anim.dialog_exit).replace(R.id.right, fragment).commit();
     }
 
 

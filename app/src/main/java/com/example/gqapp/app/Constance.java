@@ -17,12 +17,25 @@ public class Constance {
     //右主界面声音调节
     public static final int RIGHT_MAIN_VOICE_VALUE = 4444;
     //公共类做一个报警弹框来提示警告信息
-    public static final int TIPS_INFO_LEFT = 5555;
+    public static final int TIPS_INFO = 5555;
+    public static final int TIPS_MAIN_RIGHT_INFO = 5556;
+    public static final int TIPS_MAIN_LEFT_INFO = 5557;
+    public static final int START_PHONE_TEST = 5558;
     //微信音波
     public static final int WECHAT_WAVE = 6666;
-
-
+    //启动开机关机状态
+    public static final int START_PHONE = 7777;
+    //动态接收改变滚动文字的颜色
+    public static final int TEXT_COLOR = 8881;
+    public static final int TEXT_COLOR2 = 8882;
+    public static final int TEXT_COLOR3 = 8883;
+    public static final int VIEWPAGER_TEXT_COLOR = 8889;
     ///////////////////////存储///////////////////////////////////
+    //左边左上角按钮（控制显示）
+    public static final String LEFT_SPEED_BUT = "LEFT_SPEED_BUT";
+    public static final String LEFT_DISTANCE_BUT = "LEFT_DISTANCE_BUT";
+    //右边右上角按钮 （控制显示）
+    public static final String RIGHT_AC_BUT = "RIGHT_AC_BUT"; //温度
     //速度
     public static final String SPEED_DB = "SPEED";
     //距离
@@ -34,8 +47,7 @@ public class Constance {
     //多媒体存储
     //换歌
     public static final String CHANGE_MEDIAL = "CHANGE_MEDIAL";
-    //蓝牙开关
-    public static final String BLUETOOTH_ON_OFF = "BLUETOOTH_ON_OFF";
+
     //播放开关
     public static final String PLAY_ON_OFF = "PLAY_ON_OFF";
     //声音
@@ -47,5 +59,7 @@ public class Constance {
     public static final String CAR_MODE = "CAR_MODE";
     //右主界面 音量
     public static final String VOICE_VALUE = "VOICE_VALUE";
+
+    /////////////////////////////////////////////////////////////////////
 
 }

@@ -6,15 +6,20 @@
 
     <!--关透明-->
     <color name="colorTranslateHalf">#792e2e2e</color>
+    <color name="transparent">#00000000</color>
     <color name="white_1" >#f6f9f6</color>
     <color name="gray">#929292</color>
+    <color name="gray2">#929292</color>
     <color name="green">#00FF3E</color>
     <color name="wechat_green">#6DD400</color>
     <color name="wechat_green_main">#20C061</color>
     <color name="red">#FF0000</color>
+    <color name="red2">#B52525</color>
+    <color name="red2_alpha">#B52424</color>
     <color name="blue">#25C0FF</color>
-    <color name="black_alpha">#C0000000</color>
-    <color name="gray_alpha">#BF929292</color>
+    <color name="black_alpha">#B6000000</color>
+    <color name="gray_alpha">#3C929292</color>
     <color name="green_alpha">#BF00FF3E</color>
     <color name="red_alpha">#BED51929</color>
+    <color name="blue_alpha">#7F295ECF</color>
 </resources>

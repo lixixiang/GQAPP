@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="welcome_anim">
+        <item>@mipmap/a00000</item>
+        <item>@mipmap/a00001</item>
+        <item>@mipmap/a00002</item>
+        <item>@mipmap/a00003</item>
+        <item>@mipmap/a00004</item>
+        <item>@mipmap/a00005</item>
+        <item>@mipmap/a00006</item>
+        <item>@mipmap/a00007</item>
+        <item>@mipmap/a00008</item>
+        <item>@mipmap/a00009</item>
+
+        <item>@mipmap/a00010</item>
+        <item>@mipmap/a00011</item>
+        <item>@mipmap/a00012</item>
+        <item>@mipmap/a00013</item>
+        <item>@mipmap/a00014</item>
+        <item>@mipmap/a00015</item>
+        <item>@mipmap/a00016</item>
+        <item>@mipmap/a00017</item>
+        <item>@mipmap/a00018</item>
+        <item>@mipmap/a00019</item>
+
+        <item>@mipmap/a00020</item>
+        <item>@mipmap/a00021</item>
+        <item>@mipmap/a00022</item>
+        <item>@mipmap/a00023</item>
+        <item>@mipmap/a00024</item>
+        <item>@mipmap/a00025</item>
+        <item>@mipmap/a00026</item>
+        <item>@mipmap/a00027</item>
+        <item>@mipmap/a00028</item>
+        <item>@mipmap/a00029</item>
+
+        <item>@mipmap/a00030</item>
+        <item>@mipmap/a00031</item>
+        <item>@mipmap/a00032</item>
+        <item>@mipmap/a00033</item>
+        <item>@mipmap/a00034</item>
+        <item>@mipmap/a00035</item>
+        <item>@mipmap/a00036</item>
+        <item>@mipmap/a00037</item>
+        <item>@mipmap/a00038</item>
+        <item>@mipmap/a00039</item>
+
+        <item>@mipmap/a00040</item>
+        <item>@mipmap/a00041</item>
+        <item>@mipmap/a00042</item>
+        <item>@mipmap/a00043</item>
+        <item>@mipmap/a00044</item>
+        <item>@mipmap/a00045</item>
+        <item>@mipmap/a00046</item>
+        <item>@mipmap/a00047</item>
+        <item>@mipmap/a00048</item>
+        <item>@mipmap/a00049</item>
+
+        <item>@mipmap/a00050</item>
+        <item>@mipmap/a00051</item>
+        <item>@mipmap/a00052</item>
+        <item>@mipmap/a00053</item>
+        <item>@mipmap/a00054</item>
+        <item>@mipmap/a00055</item>
+        <item>@mipmap/a00056</item>
+        <item>@mipmap/a00057</item>
+        <item>@mipmap/a00058</item>
+        <item>@mipmap/a00059</item>
+
+        <item>@mipmap/a00060</item>
+        <item>@mipmap/a00061</item>
+        <item>@mipmap/a00062</item>
+        <item>@mipmap/a00063</item>
+        <item>@mipmap/a00064</item>
+        <item>@mipmap/a00065</item>
+        <item>@mipmap/a00066</item>
+        <item>@mipmap/a00067</item>
+        <item>@mipmap/a00068</item>
+        <item>@mipmap/a00069</item>
+
+        <item>@mipmap/a00070</item>
+        <item>@mipmap/a00071</item>
+        <item>@mipmap/a00072</item>
+        <item>@mipmap/a00073</item>
+        <item>@mipmap/a00074</item>
+        <item>@mipmap/a00075</item>
+        <item>@mipmap/a00076</item>
+        <item>@mipmap/a00077</item>
+        <item>@mipmap/a00078</item>
+        <item>@mipmap/a00079</item>
+
+        <item>@mipmap/a00080</item>
+        <item>@mipmap/a00081</item>
+        <item>@mipmap/a00082</item>
+        <item>@mipmap/a00083</item>
+        <item>@mipmap/a00084</item>
+        <item>@mipmap/a00085</item>
+        <item>@mipmap/a00086</item>
+        <item>@mipmap/a00087</item>
+        <item>@mipmap/a00088</item>
+        <item>@mipmap/a00089</item>
+
+        <item>@mipmap/a00090</item>
+        <item>@mipmap/a00091</item>
+        <item>@mipmap/a00092</item>
+        <item>@mipmap/a00093</item>
+        <item>@mipmap/a00094</item>
+        <item>@mipmap/a00095</item>
+        <item>@mipmap/a00096</item>
+        <item>@mipmap/a00097</item>
+        <item>@mipmap/a00098</item>
+        <item>@mipmap/a00099</item>
+
+        <item>@mipmap/a00100</item>
+        <item>@mipmap/a00101</item>
+        <item>@mipmap/a00102</item>
+        <item>@mipmap/a00103</item>
+        <item>@mipmap/a00104</item>
+        <item>@mipmap/a00105</item>
+        <item>@mipmap/a00106</item>
+        <item>@mipmap/a00107</item>
+        <item>@mipmap/a00108</item>
+        <item>@mipmap/a00109</item>
+
+        <item>@mipmap/a00110</item>
+        <item>@mipmap/a00111</item>
+        <item>@mipmap/a00112</item>
+        <item>@mipmap/a00113</item>
+        <item>@mipmap/a00114</item>
+        <item>@mipmap/a00115</item>
+        <item>@mipmap/a00116</item>
+        <item>@mipmap/a00117</item>
+        <item>@mipmap/a00118</item>
+        <item>@mipmap/a00119</item>
+
+        <item>@mipmap/a00120</item>
+        <item>@mipmap/a00121</item>
+        <item>@mipmap/a00122</item>
+        <item>@mipmap/a00123</item>
+        <item>@mipmap/a00124</item>
+        <item>@mipmap/a00125</item>
+        <item>@mipmap/a00126</item>
+        <item>@mipmap/a00127</item>
+        <item>@mipmap/a00128</item>
+        <item>@mipmap/a00129</item>
+
+        <item>@mipmap/a00130</item>
+        <item>@mipmap/a00131</item>
+        <item>@mipmap/a00132</item>
+        <item>@mipmap/a00133</item>
+        <item>@mipmap/a00134</item>
+        <item>@mipmap/a00135</item>
+        <item>@mipmap/a00136</item>
+        <item>@mipmap/a00137</item>
+        <item>@mipmap/a00138</item>
+        <item>@mipmap/a00139</item>
+
+        <item>@mipmap/a00140</item>
+        <item>@mipmap/a00141</item>
+        <item>@mipmap/a00142</item>
+        <item>@mipmap/a00143</item>
+        <item>@mipmap/a00144</item>
+        <item>@mipmap/a00145</item>
+        <item>@mipmap/a00146</item>
+        <item>@mipmap/a00147</item>
+        <item>@mipmap/a00148</item>
+        <item>@mipmap/a00149</item>
+
+        <item>@mipmap/a00150</item>
+        <item>@mipmap/a00151</item>
+        <item>@mipmap/a00152</item>
+        <item>@mipmap/a00153</item>
+        <item>@mipmap/a00154</item>
+        <item>@mipmap/a00155</item>
+        <item>@mipmap/a00156</item>
+        <item>@mipmap/a00157</item>
+        <item>@mipmap/a00158</item>
+        <item>@mipmap/a00159</item>
+
+        <item>@mipmap/a00160</item>
+        <item>@mipmap/a00161</item>
+        <item>@mipmap/a00162</item>
+        <item>@mipmap/a00163</item>
+        <item>@mipmap/a00164</item>
+        <item>@mipmap/a00165</item>
+        <item>@mipmap/a00166</item>
+        <item>@mipmap/a00167</item>
+        <item>@mipmap/a00168</item>
+        <item>@mipmap/a00169</item>
+
+        <item>@mipmap/a00170</item>
+        <item>@mipmap/a00171</item>
+        <item>@mipmap/a00172</item>
+        <item>@mipmap/a00173</item>
+        <item>@mipmap/a00174</item>
+        <item>@mipmap/a00175</item>
+        <item>@mipmap/a00176</item>
+        <item>@mipmap/a00177</item>
+        <item>@mipmap/a00178</item>
+        <item>@mipmap/a00179</item>
+
+        <item>@mipmap/a00180</item>
+        <item>@mipmap/a00181</item>
+        <item>@mipmap/a00182</item>
+        <item>@mipmap/a00183</item>
+        <item>@mipmap/a00184</item>
+        <item>@mipmap/a00185</item>
+        <item>@mipmap/a00186</item>
+        <item>@mipmap/a00187</item>
+        <item>@mipmap/a00188</item>
+        <item>@mipmap/a00189</item>
+
+        <item>@mipmap/a00190</item>
+        <item>@mipmap/a00191</item>
+        <item>@mipmap/a00192</item>
+        <item>@mipmap/a00193</item>
+        <item>@mipmap/a00194</item>
+        <item>@mipmap/a00195</item>
+        <item>@mipmap/a00196</item>
+        <item>@mipmap/a00197</item>
+        <item>@mipmap/a00198</item>
+        <item>@mipmap/a00199</item>
+
+        <item>@mipmap/a00200</item>
+        <item>@mipmap/a00201</item>
+        <item>@mipmap/a00202</item>
+        <item>@mipmap/a00203</item>
+        <item>@mipmap/a00204</item>
+        <item>@mipmap/a00205</item>
+        <item>@mipmap/a00206</item>
+        <item>@mipmap/a00207</item>
+        <item>@mipmap/a00208</item>
+        <item>@mipmap/a00209</item>
+
+        <item>@mipmap/a00210</item>
+        <item>@mipmap/a00211</item>
+        <item>@mipmap/a00212</item>
+        <item>@mipmap/a00213</item>
+        <item>@mipmap/a00214</item>
+        <item>@mipmap/a00215</item>
+        <item>@mipmap/a00216</item>
+        <item>@mipmap/a00217</item>
+        <item>@mipmap/a00218</item>
+        <item>@mipmap/a00219</item>
+
+        <item>@mipmap/a00220</item>
+        <item>@mipmap/a00221</item>
+        <item>@mipmap/a00222</item>
+        <item>@mipmap/a00223</item>
+        <item>@mipmap/a00224</item>
+        <item>@mipmap/a00225</item>
+        <item>@mipmap/a00226</item>
+        <item>@mipmap/a00227</item>
+        <item>@mipmap/a00228</item>
+        <item>@mipmap/a00229</item>
+
+        <item>@mipmap/a00230</item>
+        <item>@mipmap/a00231</item>
+
+    </integer-array>
+</resources>

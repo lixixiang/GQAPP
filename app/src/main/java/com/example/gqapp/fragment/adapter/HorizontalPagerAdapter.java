@@ -23,10 +23,11 @@ import java.util.List;
 public class HorizontalPagerAdapter extends PagerAdapter {
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private int[] images ={R.drawable.iv_wmm_pic1,R.drawable.iv_wmm_pic2,R.drawable.iv_wmm_pic1};
+    private int[] images ;
 
-    public HorizontalPagerAdapter(Context context) {
+    public HorizontalPagerAdapter(Context context,int[] images) {
         mContext = context;
+        this.images = images;
         mLayoutInflater = LayoutInflater.from(context);
     }
 
@@ -46,6 +47,7 @@ public class HorizontalPagerAdapter extends PagerAdapter {
         View view =  mLayoutInflater.inflate(R.layout.image_item, container, false);
         SemicircleImageView imageView = view.findViewById(R.id.img);
         imageView.setImageResource(images[position]);
+        imageView.setTag(images[position]);
         container.addView(view);
         return view;
     }

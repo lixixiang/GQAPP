@@ -49,6 +49,7 @@ public class SmartPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) { //初始化 item
         container.addView(mList.get(position%mList.size()),0);
+
         return mList.get(position%mList.size());
 
     }

@@ -14,6 +14,7 @@ import android.view.View;
 import androidx.annotation.ColorInt;
 
 import com.example.gqapp.R;
+import com.example.gqapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +32,11 @@ public class PickerView extends View {
     /**
      * text之间间距和minTextSize之比
      */
-    public static final float MARGIN_ALPHA = 2.2f;
+    public static final float MARGIN_ALPHA = 2.3f;
     /**
      * 自动回滚到中间的速度
      */
-    public static final float SPEED = 2;
+    public static final float SPEED = 2.2f;
 
     private List<String> mDataList;
     /**
@@ -191,8 +192,8 @@ public class PickerView extends View {
         mViewHeight = getMeasuredHeight();
         mViewWidth = getMeasuredWidth();
         // 按照View的高度计算字体大小
-        mMaxTextSize = mViewHeight / 3.0f;
-        mMinTextSize = mMaxTextSize / 2.5f;
+        mMaxTextSize = mViewHeight / 2f;
+        mMinTextSize = mMaxTextSize / 2.8f;
         isInit = true;
         invalidate();
     }
@@ -226,7 +227,7 @@ public class PickerView extends View {
         float scale = parabola(mViewHeight / 4.0f, mMoveLen);
         float size = (mMaxTextSize - mMinTextSize - 80.0f) * scale + mMinTextSize;
         mPaint.setTextSize(size);
-        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "simhei.ttf");
+       Typeface typeface = Typeface.createFromAsset(context.getAssets(), "HYQiHei_65J.ttf");
         mPaint.setTypeface(typeface);
         mPaint.setAlpha((int) ((mMaxTextAlpha - mMinTextAlpha) * scale + mMinTextAlpha));
         // text居中绘制，注意baseline的计算才能达到居中，y值是text中心坐标

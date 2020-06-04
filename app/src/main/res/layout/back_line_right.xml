@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.example.gqapp.widget.CustomerScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/right_bottom"
-    android:layout_width="100dp"
+    android:layout_width="150dp"
     android:layout_height="50dp"
     android:layout_gravity="bottom|center_horizontal"
     android:visibility="gone"
@@ -16,8 +16,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@android:color/white" />
+            android:layout_height="18dp"
+            android:background="@drawable/steering_wheel_adas_adjustment_btn_return" />
 
     </LinearLayout>
 

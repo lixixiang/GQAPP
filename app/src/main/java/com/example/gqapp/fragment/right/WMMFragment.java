@@ -1,38 +1,41 @@
 package com.example.gqapp.fragment.right;
 
-import android.app.AlertDialog;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.gqapp.R;
 import com.example.gqapp.app.MyApplication;
 import com.example.gqapp.base.BaseFragment;
+import com.example.gqapp.bean.DialogBean;
 import com.example.gqapp.bean.EventBean;
-import com.example.gqapp.fragment.adapter.HorizontalPagerAdapter;
-import com.example.gqapp.utils.AnimOrientation;
 import com.example.gqapp.utils.EventBusUtil;
-import com.example.gqapp.widget.horizontal.HorizontalInfiniteCycleViewPager;
+import com.example.gqapp.utils.Utils;
+import com.example.gqapp.utils.uart.UartRxData;
+import com.example.gqapp.utils.uart.UartTxData;
+import com.example.gqapp.widget.SemicircleImageView;
+import com.example.gqapp.widget.dialog.CustomPlayDialog;
+import com.example.gqapp.widget.transformer.RotateTransformer;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
-import static com.example.gqapp.app.Constance.BLUETOOTH_ON_OFF;
 import static com.example.gqapp.app.Constance.CHANGE_MEDIAL;
 import static com.example.gqapp.app.Constance.LEFT_RIGHT_VALUE;
-import static com.example.gqapp.app.Constance.NECK_PRO;
 import static com.example.gqapp.app.Constance.PLAY_ON_OFF;
-import static com.example.gqapp.app.Constance.SOUND;
-import static com.example.gqapp.app.Constance.TIPS_INFO_LEFT;
+import static com.example.gqapp.app.Constance.START_PHONE;
+import static com.example.gqapp.app.Constance.START_PHONE_TEST;
+import static com.example.gqapp.app.Constance.TIPS_INFO;
+import static com.example.gqapp.app.Constance.TIPS_MAIN_RIGHT_INFO;
 
 /**
  * @ProjectName: GQAPP
@@ -42,23 +45,28 @@ import static com.example.gqapp.app.Constance.TIPS_INFO_LEFT;
  */
 public class WMMFragment extends BaseFragment {
     @BindView(R.id.circleViewPager)
-    HorizontalInfiniteCycleViewPager ImageViewPager;
+    ViewPager ImageViewPager;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.tv_description)
+    @BindView(R.id.tv_name)
     TextView tvDescription;
-    @BindView(R.id.iv_bluetooth)
-    ImageView ivBluetooth;
-    @BindView(R.id.iv_playing)
-    ImageView ivPlaying;
-    @BindView(R.id.iv_volume)
-    ImageView ivVolume;
+//    @BindView(R.id.iv_bluetooth)
+//    ImageView ivBluetooth;
+//    @BindView(R.id.iv_playing)
+//    ImageView ivPlaying;
+//    @BindView(R.id.iv_volume)
+//    ImageView ivVolume;
 
     private boolean isChangeStatus = false, isPaying = false;
-    private int currentVolume, currentVolume2;
-    private String[] strVMMTitles = {"We Will Rock You Queen", "Something Change Queen", "We Will Rock You Queen"};
+
+
+    private String[] strVMMTitles = {"We Will Rock You Queen1", "Something Change Queen2", "We Will Rock You Queen3", "Something Change Queen4", "We Will Rock You Queen5"};
+    private String[] titles = {"米可", "张明德", "TOM", "Alice", "丽莎"};
+    private int[] images = {R.drawable.iv_wmm_pic1, R.drawable.iv_wmm_pic2, R.drawable.iv_wmm_pic1, R.drawable.iv_wmm_pic2, R.drawable.iv_wmm_pic1};
+
     private int isLeftRight;
-    private int currentPlay;
+    private int currentPlay = 1;
+    boolean isPlay = false;
 
     public static WMMFragment newInstance(int isLeftRight) {
         WMMFragment fragment = new WMMFragment();
@@ -73,32 +81,76 @@ public class WMMFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        ImageViewPager.setOffscreenPageLimit(3);
+        ImageViewPager.setPageTransformer(true, new RotateTransformer());
+        ImageViewPager.setCurrentItem(2);
+        ImageViewPager.setAdapter(new PagerAdapter() {
+            @Override
+            public int getCount() {
+                return images.length;
+            }
+
+            @Override
+            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+                return view == object;
+            }
+
+            @NonNull
+            @Override
+            public Object instantiateItem(@NonNull ViewGroup container, int position) {
+                View view = LayoutInflater.from(_mActivity).inflate(R.layout.image_item, container, false);
+                SemicircleImageView imageView = view.findViewById(R.id.img);
+                imageView.setImageResource(images[position]);
+
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CustomPlayDialog dialog = new CustomPlayDialog(_mActivity, strVMMTitles[position]);
+                        Display display = dialog.getWindow().getWindowManager().getDefaultDisplay();
+                        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+                        //dialog 不抢占焦点
+                        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+
+                        dialog.getWindow().setWindowAnimations(R.style.horizontal_anim);
+                        dialog.show();
+                        lp.width = (int) (display.getWidth() * 0.5);
+                        lp.height = display.getHeight();
+                        lp.gravity = Gravity.RIGHT;
+                        dialog.getWindow().setAttributes(lp);
+                        dialog.setOnClickDialogCallBack(new CustomPlayDialog.DialogCallBack() {
+                            @Override
+                            public void backCome() {
+                                startFragmentRight(MainRightFragment.newInstance());
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                });
+
+                imageView.setTag(images[position]);
+                container.addView(view);
+                return view;
+            }
+
+            @Override
+            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+                container.removeView((View) object);
+            }
+        });
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                EventBean<Integer> eventBean = new EventBean<Integer>(TIPS_INFO_LEFT, 4);
-                EventBusUtil.sendEvent(eventBean);
+                currentPlay  = UartRxData.ACU_CurrentSourceNo;
             }
-        },5000);
+        }, 1000);
 
-        ImageViewPager.setAdapter(new HorizontalPagerAdapter(_mActivity));
-
-        currentPlay = (int) MyApplication.get(_mActivity, CHANGE_MEDIAL, -1);
-        isChangeStatus = (boolean) MyApplication.get(_mActivity, BLUETOOTH_ON_OFF, false);
         isPaying = (boolean) MyApplication.get(_mActivity, PLAY_ON_OFF, false);
-        if (isChangeStatus) {
-            ivBluetooth.setImageResource(R.drawable.iv_signal);
-        } else {
-            ivBluetooth.setImageResource(R.drawable.iv_bluetooth);
-        }
-        if (isPaying) {
-            ivPlaying.setImageResource(R.drawable.iv_pause);
-        } else {
-            ivPlaying.setImageResource(R.drawable.iv_playing);
-        }
         if (currentPlay != -1) {
             ImageViewPager.setCurrentItem(currentPlay);
+            UartTxData.PAD_SourceSetting = currentPlay;
         }
+
         ImageViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -114,9 +166,11 @@ public class WMMFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                Log.d("onPageSelected", strVMMTitles[ImageViewPager.getRealItem()]+"   "+ImageViewPager.getRealItem());
-                tvTitle.setText(strVMMTitles[ImageViewPager.getRealItem()]);
-                MyApplication.put(_mActivity,CHANGE_MEDIAL,ImageViewPager.getRealItem());
+                currentPlay = position;
+                MyApplication.put(_mActivity, CHANGE_MEDIAL, position);
+                tvTitle.setText(strVMMTitles[position]);
+                UartTxData.PAD_SourceSetting = currentPlay;
+
             }
 
             @Override
@@ -124,99 +178,6 @@ public class WMMFragment extends BaseFragment {
 
             }
         });
-    }
-
-    @OnClick({R.id.iv_bluetooth, R.id.iv_playing, R.id.iv_volume})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.iv_bluetooth:
-                if (!isChangeStatus) {
-                    ivBluetooth.setImageResource(R.drawable.iv_signal);
-                } else {
-                    ivBluetooth.setImageResource(R.drawable.iv_bluetooth);
-                }
-                isChangeStatus = !isChangeStatus;
-                MyApplication.put(_mActivity,BLUETOOTH_ON_OFF,isChangeStatus);
-                break;
-            case R.id.iv_playing:
-                if (!isPaying) {
-                    ivPlaying.setImageResource(R.drawable.iv_pause);
-                } else {
-                    ivPlaying.setImageResource(R.drawable.iv_playing);
-                }
-                isPaying = !isPaying;
-                MyApplication.put(_mActivity,PLAY_ON_OFF,isPaying);
-                break;
-            case R.id.iv_volume:
-                final AlertDialog dlg = new AlertDialog.Builder(_mActivity, R.style.voiceDialog).create();
-                dlg.show();
-                dlg.setContentView(R.layout.dialog_voice);
-                LinearLayout ll = dlg.findViewById(R.id.ll_dialog_vmm);
-                SeekBar sbHeadrest = dlg.findViewById(R.id.sb_headrest);
-                SeekBar sbSurround = dlg.findViewById(R.id.sb_surround);
-                AnimOrientation.rightRotation90(ll);
-                currentVolume = (int) MyApplication.get(_mActivity, NECK_PRO, -1);
-                currentVolume2 = (int) MyApplication.get(_mActivity, SOUND, -1);
-                sbHeadrest.setProgress(currentVolume);
-                sbSurround.setProgress(currentVolume2);
-
-                sbSurround.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        Log.d("progress", progress + "");
-                        currentVolume2 = progress;
-                        sbSurround.setProgress(currentVolume2);
-                        MyApplication.put(_mActivity,SOUND,currentVolume2);
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-
-                    }
-                });
-                sbHeadrest.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        currentVolume = progress;
-                        sbHeadrest.setProgress(currentVolume);
-                        MyApplication.put(_mActivity,NECK_PRO,currentVolume);
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-
-                    }
-                });
-
-                ll.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dlg.dismiss();
-                    }
-                });
-                //     window.setWindowAnimations(R.style.mystyle);//设置从屏幕下方弹框动画
-                //设置弹框的高为屏幕的一半宽是屏幕的宽
-                WindowManager windowManager = _mActivity.getWindowManager();
-                Display display = windowManager.getDefaultDisplay();
-
-                WindowManager.LayoutParams lp = dlg.getWindow().getAttributes();
-                lp.width = (int) (display.getWidth() * 0.5); //设置宽度
-                lp.height = (int) (display.getHeight()); //设置宽度
-                lp.gravity = Gravity.END;
-                dlg.getWindow().setWindowAnimations(R.style.horizontal_anim);
-                dlg.getWindow().setAttributes(lp);
-                break;
-        }
     }
 
     @Override
@@ -227,5 +188,27 @@ public class WMMFragment extends BaseFragment {
          */
         EventBean<Integer> eventBean = new EventBean<Integer>(LEFT_RIGHT_VALUE, isLeftRight);
         EventBusUtil.sendEvent(eventBean);
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    public void onEventBusCome(EventBean event) {
+        switch (event.getCode()) {
+            case START_PHONE_TEST:
+                int type2 = (int) event.getData();
+                Log.d("START_PHONE", "START_PHONE+MAIN_LEFT====" + type2 + "");
+                EventBean<Integer> eventBean2 = new EventBean<Integer>(START_PHONE, type2);
+                EventBusUtil.sendEvent(eventBean2);
+                break;
+            case TIPS_MAIN_RIGHT_INFO: //提示信息弹出框 总共 4 个
+                DialogBean bean = (DialogBean) event.getData();
+                EventBean<DialogBean> beanEventBean = new EventBean<DialogBean>(TIPS_INFO, bean);
+                EventBusUtil.sendEvent(beanEventBean);
+                break;
+        }
     }
 }
